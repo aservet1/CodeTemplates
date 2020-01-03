@@ -1,7 +1,7 @@
 # CodeTempl
 Because who wants to write <code>public static void main (String[] args)</code> every time they make a new file?
 
-Makes a template source code file for my predefined languages so I don't have to set everything up. Takes away a few extra seconds of overhead so I can crank out ideas quicker.
+Makes a template source code file for my predefined languages so I don't have to set everything up. Takes away a few extra seconds of me typing out everything so I can crank out ideas quicker and get to the juice of the matter.
 
 This little project is also a vehicle for my mision to teach myself Bash scripting and regular expressions
 
