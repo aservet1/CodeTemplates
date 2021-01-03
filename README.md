@@ -1,10 +1,39 @@
-# CodeTempl
-Because who wants to write <code>public static void main (String[] args)</code> every time they make a new file?
+# codetempl
+Creates a file with the boilerplate code for a given language. For example `codetempl c` will create a file `code.c` with contents
+```
+#include <stdio.h>
+int main (int argc, char* argv[]) {
 
-Makes a template source code file for my predefined languages so I don't have to set everything up. Takes away a few extra seconds of me typing out everything so I can crank out ideas quicker and get to the juice of the matter.
+  return 0;
+}
+```
+Also saves me from having to do stuff like `chmod +x` when making an executable file, if appropriate for the language (like Bash).
 
-This little project is also a vehicle for my mision to teach myself Bash scripting and regular expressions
+## Lanugages Currently Supported
+- Java
+- C
+- C++
+- Python
+- Bash
+- HTML
 
-***Coming up***
-Not that anyone is going to install this on their device, but if they <i>want</i> to I set up the repo with a zip file. It's at least a way for me to figure out installation :) Run the setup.sh script to put everything where it needs to go.
-System requirements: I don't know. At the very least, Linux lol. I'm running Linux Mint Cinnamon 19.1. I know that it doesn't need to be anywhere near as specific. Just have a /bin and a /lib folder and the ability to run Bash scripts. I should probably find a more cogent answer for this.
+## Usage Instructions
+You can request a code template file either by language or by filename.
+
+### By Filename
+`codetempl <filename>`: Will parse the file extension in `<filename>` to find which language to use and pick the appropriate template.
+
+### By Language
+`codetempl <language>`: Will create a file `code.<ext>` where `<ext>` is the file extension appropriate to that language.
+
+Run `codetempl -langs` to see which languages are supported
+
+### Multiple Files
+You can pass multiple arguments to `codetempl` to create multiple files. Each argument can either be requesting by language or by filename, as described
+above.
+
+#### Learning Experience
+This project served as a vehicle to teach myself about Bash scripts and POSIX regular expressions
+
+## Dependencies
+Just a UNIX system that can run Bash scripts
