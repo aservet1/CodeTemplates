@@ -19,6 +19,12 @@ bash_file=$template_files/code-template.sh
 cpp_file=$template_files/code-template.cpp
 html_file=$template_files/code-template.html
 
+if [ $1 = '-langs' ]
+then
+	echo $valid_languages
+	exit
+fi
+
 for entry in $@
 do
 	if [[ $entry =~ $valid_language_regex ]]
