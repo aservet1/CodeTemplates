@@ -9,6 +9,8 @@ int main (int argc, char* argv[]) {
 ```
 Also saves me from having to do stuff like `chmod +x` when making an executable file, if appropriate for the language (like Bash).
 
+Was a good vehicle to teach myself Bash scripting and POSIX regular expressions
+
 ## Lanugages Currently Supported
 - Java
 - C
@@ -31,9 +33,6 @@ Run `codetempl -langs` to see which languages are supported
 ### Multiple Files
 You can pass multiple arguments to `codetempl` to create multiple files. Each argument can either be requesting by language or by filename, as described
 above.
-
-#### Learning Experience
-This project served as a vehicle to teach myself about Bash scripts and POSIX regular expressions
 
 ## Dependencies
 Just a UNIX system that can run Bash scripts
