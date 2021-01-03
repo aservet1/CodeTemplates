@@ -6,5 +6,3 @@
 
 - make a menu to look at the files and edit the ones you want (like your
   todolist app)
-
-- make a script that installs the files in the right place on any computer
