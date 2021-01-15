@@ -90,7 +90,10 @@ do
 		cp $contents $filename
 		if [ $(file_extension $filename) = 'java' ]
 		then
-			sed -i "s/class Code/class ${filename//.java/}/" $filename 
+			if [ $filename != 'code.java' ]
+			then
+				sed -i "s/class Code/public class ${filename//.java/}/" $filename 
+			fi
 		fi
 	else
 		echo "file '$filename' already exists"
