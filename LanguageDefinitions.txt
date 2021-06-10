@@ -1,0 +1,16 @@
+
+# File format: '#' is for comments,
+# then non-whitespace lines should have
+# the supported language and its appropriate
+# file extension, separated by whitespace
+
+python		py
+c			c
+java		java
+bash		sh
+cpp			cpp
+html		html
+perl		pl
+javascript	js
+
+

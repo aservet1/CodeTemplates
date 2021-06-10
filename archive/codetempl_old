@@ -1,0 +1,120 @@
+#!/bin/bash
+
+function file_extension() {
+	echo $1 | sed 's/^[^\.]*\.//g'
+}
+
+### This is the old version of codetempl, I have since modularized it so you don't have
+###   to update the code itself in order to add new language support.
+
+
+if [ -z $1 ]; then echo 'no file name or language entered'; exit; fi
+
+valid_languages='python c java bash cpp html perl javascript'
+file_extensions='py c java sh cpp html pl js'
+valid_language_regex="^"${valid_languages//" "/"$|^"}"$"
+valid_filename_regex="^[^.]*\.${file_extensions//' '/'|'}$"
+
+template_files=$CODETEMPL_ROOT/code_templates # $CODETEMPL_ROOT is an environment variable
+
+python_file=$template_files/code-template.py
+c_file=$template_files/code-template.c
+java_file=$template_files/code-template.java
+bash_file=$template_files/code-template.sh
+cpp_file=$template_files/code-template.cpp
+html_file=$template_files/code-template.html
+perl_file=$template_files/code-template.pl
+javascript_file=$template_files/code-template.js
+
+if [ $1 = '-langs' ]
+then
+	echo $valid_languages
+	exit
+fi
+
+for entry in $@
+do
+	if [[ $entry =~ $valid_language_regex ]]
+	then
+		echo "going off language"
+		filename='code'
+		language=$entry
+		case $language in
+		"python")
+			ext='.py'; contents=$python_file
+			;;
+		'c')
+			ext='.c'; contents=$c_file
+			;;
+		'javascript')
+			ext='.js'; contents=$javascript_file
+			;;
+		'java')
+			ext='.java'; contents=$java_file
+			;;
+		'bash')
+			ext='.sh'; contents=$bash_file
+			;;
+		'cpp')
+			contents=$cpp_file; ext='.cpp'
+			;;
+		'html')
+			contents=$html_file; ext='.html'
+			;;
+		'perl')
+			contents=$perl_file; ext='.pl'
+			;;
+		*)
+			echo 'invalid language: '$language; exit 1
+			;;
+		esac
+
+		filename=$filename$ext
+
+	elif [[ $entry =~ $valid_filename_regex ]]
+	then
+		echo "going of filename"
+		filename=$entry
+		ext=$( file_extension $filename )
+		case $ext in
+		'py')
+			contents=$python_file	;;
+		'c')
+			contents=$c_file	;;
+		'js')
+			contents=$javascript_file	;;
+		'java')
+			contents=$java_file	;;
+		'sh')
+			contents=$bash_file	;;
+		'cpp')
+			contents=$cpp_file	;;
+		'html')
+			contents=$html_file	;;
+		'pl')
+			contents=$perl_file ;;
+		*)
+			echo 'invalid filename: '$filename; exit 1	;;
+		esac
+	else
+		echo "invalid input: "$entry
+		exit 1
+	fi
+
+	if [ ! -f $filename  ]
+	then
+		echo "none exist. will make"
+		cp $contents $filename
+		if [ $(file_extension $filename) = 'java' ]
+		then
+			if [ $filename != 'code.java' ]
+			then
+				sed -i "s/class Code/public class ${filename//.java/}/" $filename 
+			fi
+		fi
+	else
+		echo "file '$filename' already exists"
+	fi
+
+
+done

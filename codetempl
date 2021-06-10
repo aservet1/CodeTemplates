@@ -4,97 +4,72 @@ function file_extension() {
 	echo $1 | sed 's/^[^\.]*\.//g'
 }
 
-if [ -z $1 ]; then echo 'no file name or language entered'; exit; fi
+function source_file() {
+	extension=$1
+	template_files=$CODETEMPL_ROOT/code_templates
+	echo "$template_files/code-template.$extension"
+}
 
-valid_languages='python c java bash cpp html perl javascript'
-file_extensions='py c java sh cpp html pl js'
-valid_language_regex="^"${valid_languages//" "/"$|^"}"$"
-valid_filename_regex="^[^.]*\.${file_extensions//' '/'|'}$"
+function item_in_list() {
+	item=$1; shift
+	list=$@
+	for x in $list; do
+		if [ "$x" == "$item" ]; then
+			return 0
+		fi
+	done
+	return 1
+}
 
-template_files=$CODETEMPL_ROOT/code_templates # $CODETEMPL_ROOT is an environment variable
-python_file=$template_files/code-template.py
-c_file=$template_files/code-template.c
-java_file=$template_files/code-template.java
-bash_file=$template_files/code-template.sh
-cpp_file=$template_files/code-template.cpp
-html_file=$template_files/code-template.html
-perl_file=$template_files/code-template.pl
-javascript_file=$template_files/code-template.js
 
-if [ $1 = '-langs' ]
-then
-	echo $valid_languages
-	exit
-fi
+definitions=LanguageDefinitions.txt
+definitions="$CODETEMPL_ROOT/$definitions"
+
+comments='s/#.*$//'; lines='/^\s*$/d'
+
+languages=$(sed -e $comments -e $lines -e 's/\s.*//' $definitions)
+file_extensions=$(sed -e $comments -e $lines -e 's/.*\s//' $definitions)
+
+
+declare -A extension_dict
+exts=($file_extensions)
+i=0; for lang in $languages
+do
+	extension_dict[$lang]=${exts[$i]}
+	i=$(( $i + 1 ))
+done
+unset exts
+
 
 for entry in $@
 do
-	if [[ $entry =~ $valid_language_regex ]]
-	then
-		echo "going off language"
-		filename='code'
-		language=$entry
-		case $language in
-		"python")
-			ext='.py'; contents=$python_file
-			;;
-		'c')
-			ext='.c'; contents=$c_file
-			;;
-		'javascript')
-			ext='.js'; contents=$javascript_file
-			;;
-		'java')
-			ext='.java'; contents=$java_file
-			;;
-		'bash')
-			ext='.sh'; contents=$bash_file
-			;;
-		'cpp')
-			contents=$cpp_file; ext='.cpp'
-			;;
-		'html')
-			contents=$html_file; ext='.html'
-			;;
-		'perl')
-			contents=$perl_file; ext='.pl'
-			;;
-		*)
-			echo 'invalid language: '$language; exit 1
-			;;
-		esac
 
-		filename=$filename$ext
-
-	elif [[ $entry =~ $valid_filename_regex ]]
+	if item_in_list $entry $languages
 	then
-		echo "going of filename"
+		echo 'going off language based on language'
+		ext=${extension_dict[$entry]}
+		contents=$(source_file $ext)
+		filename="code.$ext"
+
+	elif item_in_list $entry $file_extensions
+	then
+		echo 'going off language based on file extension'
+		ext=$entry
+		contents=$(source_file $ext)
+		filename="code.$ext"
+
+	elif item_in_list $(file_extension $entry) $file_extensions
+	then
+		echo 'going off filename'
+		ext=$(file_extension $entry)
+		contents=$(source_file $ext)
 		filename=$entry
-		ext=$( file_extension $filename )
-		case $ext in
-		'py')
-			contents=$python_file	;;
-		'c')
-			contents=$c_file	;;
-		'js')
-			contents=$javascript_file	;;
-		'java')
-			contents=$java_file	;;
-		'sh')
-			contents=$bash_file	;;
-		'cpp')
-			contents=$cpp_file	;;
-		'html')
-			contents=$html_file	;;
-		'pl')
-			contents=$perl_file ;;
-		*)
-			echo 'invalid filename: '$filename; exit 1	;;
-		esac
+
 	else
-		echo "invalid input: "$entry
+		echo "invalid input: $entry"
 		exit 1
 	fi
+
 
 	if [ ! -f $filename  ]
 	then
@@ -111,5 +86,5 @@ do
 		echo "file '$filename' already exists"
 	fi
 
-
 done
+
