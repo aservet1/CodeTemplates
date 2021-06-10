@@ -4,13 +4,13 @@
 # the supported language and its appropriate
 # file extension, separated by whitespace
 
+javascript	js
 python		py
-c			c
 java		java
 bash		sh
 cpp			cpp
 html		html
 perl		pl
-javascript	js
+c			c
 
 

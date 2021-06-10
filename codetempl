@@ -1,34 +1,16 @@
 #!/bin/bash
 
-function file_extension() {
-	echo $1 | sed 's/^[^\.]*\.//g'
-}
+source util.sh
 
-function source_file() {
-	extension=$1
-	template_files=$CODETEMPL_ROOT/code_templates
-	echo "$template_files/code-template.$extension"
-}
-
-function item_in_list() {
-	item=$1; shift
-	list=$@
-	for x in $list; do
-		if [ "$x" == "$item" ]; then
-			return 0
-		fi
-	done
-	return 1
-}
-
+[ -z $1 ] && usage_abort
+[ $1 == "help" ] && help_message
+file_requests=$@
 
 definitions=LanguageDefinitions.txt
 definitions="$CODETEMPL_ROOT/$definitions"
 
-comments='s/#.*$//'; lines='/^\s*$/d'
-
-languages=$(sed -e $comments -e $lines -e 's/\s.*//' $definitions)
-file_extensions=$(sed -e $comments -e $lines -e 's/.*\s//' $definitions)
+languages=$( strip_file_contents $definitions | sed 's/\s.*//' )
+file_extensions=$( strip_file_contents $definitions | sed 's/.*\s//')
 
 
 declare -A extension_dict
@@ -41,7 +23,7 @@ done
 unset exts
 
 
-for entry in $@
+for entry in $file_requests
 do
 
 	if item_in_list $entry $languages
@@ -69,7 +51,6 @@ do
 		echo "invalid input: $entry"
 		exit 1
 	fi
-
 
 	if [ ! -f $filename  ]
 	then

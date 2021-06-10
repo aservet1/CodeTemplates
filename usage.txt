@@ -1,0 +1,10 @@
+usage: codetempl file_requests|help
+
+	file_requests:
+		an arbitrary length list of either programming languages
+		or filenames with with extensions that match to the approved
+		languages
+
+	help:
+		will print this message as well as the currently valid programming
+		languages and their recognized file extensions
