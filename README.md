@@ -1,5 +1,5 @@
 # codetempl
-Creates a file with the boilerplate code for a given language. For example `codetempl c` will create a file `code.c` with contents
+Creates a file with the boilerplate code for a given language. For example `codetempl c` will create a file `code.c` with contents:
 ```
 #include <stdio.h>
 int main (int argc, char* argv[]) {
@@ -7,6 +7,7 @@ int main (int argc, char* argv[]) {
   return 0;
 }
 ```
+
 It also saves me from manually making files executable with `chmod +x`, by creating the template file for that language as executable, like for shell scripts.
 
 The program parses your input, finds the corresponding template file in the `code_templates` directory, and copies it with `cp`.
