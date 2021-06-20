@@ -1,8 +1,0 @@
-- make a separate params file where you write the valid languages and their
-  extensions
-
-- make a function where you pass in either the language or the filename
-  and get the proper template out
-
-- make a menu to look at the files and edit the ones you want (like your
-  todolist app)
