@@ -7,9 +7,9 @@ int main (int argc, char* argv[]) {
   return 0;
 }
 ```
-It also saves me from manually making files executable with `chmod +x`, by creating the template file for that language as executable.
+It also saves me from manually making files executable with `chmod +x`, by creating the template file for that language as executable, like for shell scripts.
 
-The program parses your input, finds the corresponding template file, and copies it with `cp`.
+The program parses your input, finds the corresponding template file in the `code_templates` directory, and copies it with `cp`.
 
 ## Lanugages Currently Supported
 
