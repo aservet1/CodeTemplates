@@ -6,26 +6,22 @@ source util.sh
 [ $1 == "help" ] && help_message
 file_requests=$@
 
-definitions=LanguageDefinitions.txt
-definitions="$CODETEMPL_ROOT/$definitions"
+definitions=$CODETEMPL_ROOT/languages.config
 
-languages=$( strip_file_contents $definitions | sed 's/\s.*//' )
-file_extensions=$( strip_file_contents $definitions | sed 's/.*\s//')
+languages=$( strip_file_contents $definitions | awk '{print $1}' )
+file_extensions=$( strip_file_contents $definitions | awk '{print $2}' )
 
 
 declare -A extension_dict
 exts=($file_extensions)
-i=0; for lang in $languages
-do
+i=0; for lang in $languages; do
 	extension_dict[$lang]=${exts[$i]}
 	i=$(( $i + 1 ))
-done
-unset exts
+done; unset exts
 
 
 for entry in $file_requests
 do
-
 	if item_in_list $entry $languages
 	then
 		echo 'going off language based on language'
