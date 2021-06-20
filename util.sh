@@ -25,9 +25,8 @@ function usage_abort() {
 }
 
 function help_message() {
-	cat $CODETEMPL_ROOT/usage.txt
-	echo ""
-	print_languages_formatted $CODETEMPL_ROOT/LanguageDefinitions.txt
+	cat $CODETEMPL_ROOT/usage.txt; echo ""
+	print_languages_formatted $CODETEMPL_ROOT/languages.config
 	exit 1
 }
 
