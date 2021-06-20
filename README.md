@@ -23,6 +23,16 @@ The program parses your input, finds the corresponding template file in the `cod
 - HTML
 - Perl
 
+## Installation
+Set up `CODETEMPL_ROOT` as an environment variable, pointing to where this project is saved on your system. Then add it to `PATH`.
+
+For example (in `.profile`):
+```
+# setup for codetempl
+export CODETEMPL_ROOT=/home/alejandro/codetempl
+export PATH=$PATH:$CODETEMPL_ROOT
+```
+
 ## Usage Instructions
 You can request a code template file either by language or by filename.
 
