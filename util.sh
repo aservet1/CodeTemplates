@@ -5,14 +5,14 @@ function file_extension() {
 }
 
 function source_file() {
-	echo '$CODETEMPL_ROOT/code_templates/code-template.$1'
+	echo "$CODETEMPL_ROOT/code_templates/code-template.$1"
 }
 
 function item_in_list() {
 	local key=$1; shift
 	local list=$@
 	for item in $list; do
-		if [ '$item' == '$key' ]; then
+		if [ "$item" == "$key" ]; then
 			return 0
 		fi
 	done

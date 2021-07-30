@@ -6,13 +6,12 @@ source util.sh
 
 [ -z $1 ] && usage_abort
 [ $1 == "help" ] && help_message
-file_requests=$@
+requests=$@
 
 definitions=$CODETEMPL_ROOT/languages.config
 
 languages=$( strip_file_contents $definitions | awk '{print $1}' )
 file_extensions=$( strip_file_contents $definitions | awk '{print $2}' )
-
 
 declare -A extension_dict
 exts=($file_extensions)
@@ -22,7 +21,7 @@ i=0; for lang in $languages; do
 done; unset exts
 
 
-for entry in $file_requests
+for entry in $requests
 do
 	if item_in_list $entry $languages
 	then
@@ -53,6 +52,7 @@ do
 	if [ ! -f $filename  ]
 	then
 		echo "none exist. will make"
+		echo "$contents"
 		cp $contents $filename
 		if [ $(file_extension $filename) = 'java' ]
 		then
