@@ -5,18 +5,24 @@ function file_extension() {
 }
 
 function source_file() {
-	echo "$CODETEMPL_ROOT/code_templates/code-template.$1"
+	echo '$CODETEMPL_ROOT/code_templates/code-template.$1'
 }
 
 function item_in_list() {
 	local key=$1; shift
 	local list=$@
 	for item in $list; do
-		if [ "$item" == "$key" ]; then
+		if [ '$item' == '$key' ]; then
 			return 0
 		fi
 	done
 	return 1
+}
+
+function help_message() {
+	cat $CODETEMPL_ROOT/usage.txt; echo ''
+	print_languages_formatted $CODETEMPL_ROOT/languages.config
+	exit 1
 }
 
 function usage_abort() {
@@ -24,10 +30,9 @@ function usage_abort() {
 	exit 2
 }
 
-function help_message() {
-	cat $CODETEMPL_ROOT/usage.txt; echo ""
-	print_languages_formatted $CODETEMPL_ROOT/languages.config
-	exit 1
+function env_var_not_set() {
+	echo 'error: environment variable $CODETEMPL_ROOT not set'
+	exit 3
 }
 
 function strip_file_contents() {
@@ -43,6 +48,6 @@ function strip_file_contents() {
 
 function print_languages_formatted() {
 	local file=$1
-	echo " Language Name: Recognized File Extension"
+	echo ' Language Name: Recognized File Extension'
 	strip_file_contents $file | sed 's/\s\s*/:\t/' | sed 's/^/  | /'
 }

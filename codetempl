@@ -2,6 +2,8 @@
 
 source util.sh
 
+[ -z $CODETEMPL_ROOT ] && env_var_not_set
+
 [ -z $1 ] && usage_abort
 [ $1 == "help" ] && help_message
 file_requests=$@
