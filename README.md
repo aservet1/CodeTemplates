@@ -54,8 +54,9 @@ above.
 
 The file syntax is simple.
 - `#` for comments
-- Each line is of the format `language_name file_extension`, any amount of whitespace allowed between the words.
-- All other whitespace is ignored
+- Items are newline-delimited
+- Each line is of format `language_name file_extension`. Any amount of whitespace delimits the words.
+- All other whitespace (trailing, leading, empty lines) is ignored
 
 ## Adding your own templates
 Template files are stored in the `code_templates` directory in the root of this project. They must be named `code_template.ext`, where `ext` is the recognized file extension in the `languages.config` file. You can edit the content of the files as whatever your need for "boilerplate code" for that language evolves.
