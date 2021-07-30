@@ -19,6 +19,7 @@ The program parses your input, finds the corresponding template file in the `cod
 - Java
 - Bash
 - JavaScript
+- LaTex
 - C++
 - HTML
 - Perl
