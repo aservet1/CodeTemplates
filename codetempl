@@ -52,7 +52,6 @@ do
 	if [ ! -f $filename  ]
 	then
 		echo "none exist. will make"
-		echo "$contents"
 		cp $contents $filename
 		if [ $(file_extension $filename) = 'java' ]
 		then
